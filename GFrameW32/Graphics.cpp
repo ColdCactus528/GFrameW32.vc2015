@@ -169,7 +169,7 @@ bool IsSimplePoligon(std::vector<iPoint> points)
 bool IsPointInPoligon(std::vector<iPoint> points, iPoint dot, bool flag) {
 	//Если flag = true, то находится ли dot внутри многоугольника, заданного точками points определяется правилом EO
 	//Если flag = false, то находится ли dot внутри многоугольника, заданного точками points определяется правилом  NZW
-	
+
 	if (flag == true) {
 		// Переменная для хранения количества точек
 		int n = points.size();
@@ -199,7 +199,7 @@ bool IsPointInPoligon(std::vector<iPoint> points, iPoint dot, bool flag) {
 		else
 		{
 			return false;
-		}	
+		}
 	}
 	else {
 		// Ввести новую переменную, которая хранит самую дальнюю координату по оси х 
@@ -214,7 +214,7 @@ bool IsPointInPoligon(std::vector<iPoint> points, iPoint dot, bool flag) {
 		// Если нет, то -1
 		// Если счетчик больше 0, то точка внутри многоугольника
 		// Если счетчик меньше 0, то точка вне многоугольника
-		
+
 		// Переменная для хранения количества точек
 		int n = points.size();
 		// Переменная для хранения количества пересечений
@@ -305,7 +305,7 @@ void BezierCurve3d(std::vector<iPoint> points, RGBPIXEL color) {
 	int h = max(Dist(points[0] - 2 * points[1] + points[2]), Dist(points[1] - 2 * points[2] + points[3]));
 	int N = 1 + sqrt(3 * h);
 	// Перебираем точки
-	for (double t = 0; t < 1+1./2/N; t += 1./N)
+	for (double t = 0; t < 1 + 1. / 2 / N; t += 1. / N)
 	{
 		double x = 0;
 		double y = 0;
@@ -326,7 +326,7 @@ void BezierCurve(std::vector<iPoint> points, RGBPIXEL color) {
 	// Построить с помощью параметрического уравнения Безье
 	// Параметр t принимает значения от 0 до 1
 	// Параметр t увеличивается на 0.001
-	
+
 	// Переменная для хранения количества точек
 	int n = points.size();
 	// Переменная для хранения количества пересечений
@@ -347,7 +347,7 @@ void BezierCurve(std::vector<iPoint> points, RGBPIXEL color) {
 
 iPoint Intersection(iPoint a1, iPoint a2, iPoint b1, iPoint b2)
 {
-	
+
 	// Найти точку пересечения
 	double x = ((a1.x * a2.y - a1.y * a2.x) * (b1.x - b2.x) - (a1.x - a2.x) * (b1.x * b2.y - b1.y * b2.x)) / ((a1.x - a2.x) * (b1.y - b2.y) - (a1.y - a2.y) * (b1.x - b2.x));
 	double y = ((a1.x * a2.y - a1.y * a2.x) * (b1.y - b2.y) - (a1.y - a2.y) * (b1.x * b2.y - b1.y * b2.x)) / ((a1.x - a2.x) * (b1.y - b2.y) - (a1.y - a2.y) * (b1.x - b2.x));
@@ -396,7 +396,7 @@ std::vector<iPoint> CuttingAlgorithmSHEdge(iPoint cutting_point1, iPoint cutting
 	// Если point1 и point2 находятся справа от прямой cutting_point1-cutting_point2, то возвращаем point2
 	if (classify_point1 == iPoint::ClassifyResult::RIGHT && classify_point2 == iPoint::ClassifyResult::RIGHT)
 		return std::vector<iPoint>{ point2 };
-	
+
 	// Если point1 находится справа от прямой cutting_point1-cutting_point2, а point2 - слева, то возвращаем точку пересечения отрезка point1-point2 и прямой cutting_point1-cutting_point2 и point1
 	if (classify_point1 == iPoint::ClassifyResult::RIGHT && classify_point2 == iPoint::ClassifyResult::LEFT)
 	{
@@ -404,7 +404,7 @@ std::vector<iPoint> CuttingAlgorithmSHEdge(iPoint cutting_point1, iPoint cutting
 		t /= (point1.x - point2.x) * (cutting_point1.y - cutting_point2.y) - (point1.y - point2.y) * (cutting_point1.x - cutting_point2.x);
 		return std::vector<iPoint>{ iPoint(point1.x + (point2.x - point1.x) * t, point1.y + (point2.y - point1.y) * t) };
 	}
-	
+
 	// Если point1 находится на прямой cutting_point1-cutting_point2, а point2 - справа, то возвращаем point1 и point2
 	if (classify_point1 != iPoint::ClassifyResult::LEFT && classify_point1 != iPoint::ClassifyResult::RIGHT && classify_point2 == iPoint::ClassifyResult::RIGHT)
 		return std::vector<iPoint>{ point1, point2 };
@@ -483,9 +483,9 @@ void CuttingAlgorithmSB(std::vector<iPoint>& cutting_points, iPoint& point1, iPo
 		vector_of_normals[i] = iPoint(cutting_point2.y - cutting_point1.y, cutting_point1.x - cutting_point2.x);
 	}
 
-	std::vector<double> enterings(n,0);
+	std::vector<double> enterings(n, 0);
 	std::vector<double> leavings(n, 1);
-	
+
 	// Перебираем все ребра отсекателя
 	for (int i = 0; i < n; i++)
 	{
@@ -496,10 +496,11 @@ void CuttingAlgorithmSB(std::vector<iPoint>& cutting_points, iPoint& point1, iPo
 		// Получаем нормаль к ребру отсекателя
 		iPoint normal = vector_of_normals[i];
 		double d = normal.x * (point2.x - point1.x) + normal.y * (point2.y - point1.y);
-		double t = - (normal.x * (point1.x - cutting_point1.x) + normal.y * (point1.y - cutting_point1.y));
+		double t = -(normal.x * (point1.x - cutting_point1.x) + normal.y * (point1.y - cutting_point1.y));
 		if (d == 0) {
-				if (t < 0) return ;
-		} else {
+			if (t < 0) return;
+		}
+		else {
 			t /= d;
 			if (d < 0) enterings[i] = max(enterings[i], t);
 			else leavings[i] = min(leavings[i], t);
@@ -509,20 +510,20 @@ void CuttingAlgorithmSB(std::vector<iPoint>& cutting_points, iPoint& point1, iPo
 	double t = 1;
 	for (int i = 0; i < n; i++)
 		t = min(t, leavings[i]);
-	
+
 	if (t < enterings[0])
 		return;
-	
+
 	iPoint point3 = iPoint(point1.x + t * (point2.x - point1.x), point1.y + t * (point2.y - point1.y));
 	t = 0;
 	for (int i = 0; i < n; i++)
 		t = max(t, enterings[i]);
-	
+
 	if (t > leavings[0])
 		return;
-	
+
 	iPoint point4 = iPoint(point1.x + t * (point2.x - point1.x), point1.y + t * (point2.y - point1.y));
-	
+
 	point1 = point3;
 	point2 = point4;
 	DrawLine(point3.x, point3.y, point4.x, point4.y, RGBPIXEL(0, 0, 255));
@@ -549,11 +550,11 @@ void CuttingLineArbitraryPolygon(std::vector<iPoint> points, iPoint point1, iPoi
 	int e2;
 	while (true)
 	{
-		if (IsPointInPoligon(points, point1, true)) 
+		if (IsPointInPoligon(points, point1, true))
 		{
 			gfSetPixel(point1.x, point1.y, color);
 		}
-		
+
 		if (point1.x == point2.x && point1.y == point2.y)
 			break;
 		e2 = 2 * err;
@@ -604,43 +605,43 @@ void DrawArc(iPoint& center, int radius, double start_angle, double end_angle, R
 	// Вычисляем точки начала и конца дуги
 	iPoint point1 = iPoint(center.x + radius * cos(angle1), center.y + radius * sin(angle1));
 	iPoint point3 = iPoint(center.x + radius * cos(angle2), center.y + radius * sin(angle2));
-	
+
 	// Найдем радиус вектора
 	iPoint radius_vector1 = iPoint(point1.x - center.x, point1.y - center.y);
 	iPoint radius_vector2 = iPoint(point3.x - center.x, point3.y - center.y);
-	
+
 	// Найдем вектор нормали
 	iPoint normal_vector1 = iPoint(-radius_vector1.y, radius_vector1.x);
 	iPoint normal_vector2 = iPoint(-radius_vector2.y, radius_vector2.x);
-	
+
 	// Найдем точку пересечения касательных к окружности в точках начала и конца дуги
 	iPoint point2 = point1 + normal_vector1;
 	iPoint point4 = point3 + normal_vector2;
-	
+
 	// Найдем точку пересечения прямых point1 point3 и point2 point4
 	iPoint point_tangent;
 	point_tangent.x = ((point1.x * point2.y - point1.y * point2.x) * (point3.x - point4.x) - (point1.x - point2.x) * (point3.x * point4.y - point3.y * point4.x)) / ((point1.x - point2.x) * (point3.y - point4.y) - (point1.y - point2.y) * (point3.x - point4.x));
 	point_tangent.y = ((point1.x * point2.y - point1.y * point2.x) * (point3.y - point4.y) - (point1.y - point2.y) * (point3.x * point4.y - point3.y * point4.x)) / ((point1.x - point2.x) * (point3.y - point4.y) - (point1.y - point2.y) * (point3.x - point4.x));
-	
+
 	// Вычислим расстояние от point_tangent до point1
 	double distance = sqrt((point_tangent.x - point1.x) * (point_tangent.x - point1.x) + (point_tangent.y - point1.y) * (point_tangent.y - point1.y));
-	
+
 	// Вычислим точку P1
 	iPoint point_p1;
-	point_p1.x = point1.x + (point_tangent.x - point1.x) * 4 / 3 * (1 / (1 + sqrt(1 + (distance / radius) * (distance / radius) )));
-	point_p1.y = point1.y + (point_tangent.y - point1.y) * 4 / 3 * (1 / (1 + sqrt(1 + (distance / radius) * (distance / radius) )));
-	
+	point_p1.x = point1.x + (point_tangent.x - point1.x) * 4 / 3 * (1 / (1 + sqrt(1 + (distance / radius) * (distance / radius))));
+	point_p1.y = point1.y + (point_tangent.y - point1.y) * 4 / 3 * (1 / (1 + sqrt(1 + (distance / radius) * (distance / radius))));
+
 	// Вычислим точку P2
 	iPoint point_p2;
 	point_p2.x = point3.x + (point_tangent.x - point3.x) * 4 / 3 * (1 / (1 + sqrt(1 + (distance / radius) * (distance / radius))));
 	point_p2.y = point3.y + (point_tangent.y - point3.y) * 4 / 3 * (1 / (1 + sqrt(1 + (distance / radius) * (distance / radius))));
-	
+
 	std::vector<iPoint> points;
 	points.push_back(point1);
 	points.push_back(point_p1);
 	points.push_back(point_p2);
 	points.push_back(point3);
-	
+
 	BezierCurve3d(points, color);
 	DrawLine(center.x, center.y, point1.x, point1.y, color);
 	DrawLine(center.x, center.y, point3.x, point3.y, color);
@@ -900,7 +901,7 @@ void BuildPerspectiveProjection(
 		// Построить линии из точки схода в точки параллелепипеда
 		for (int i = 0; i < 4; i++)
 		{
-			DrawLine( int(pointOfView.x), int(pointOfView.y),  int(points[i].x), int(points[i].y), RGBPIXEL::Red());
+			DrawLine(int(pointOfView.x), int(pointOfView.y), int(points[i].x), int(points[i].y), RGBPIXEL::Red());
 		}
 	}
 	else
@@ -961,10 +962,10 @@ void BuildPerspectiveProjection(
 bool gfInitScene()
 {
 	gfSetWindowSize(600, 600);
-	
+
 	// Начертание дуги окружности
 	//DrawArc(iPoint(300, 300), 150, 30, 120, RGBPIXEL::Red());
-	
+
 	// ДЗ с отсечением отрезка прямой произвольным полигоном
 	// Нарисовать полигон в виде звезды
 	/*std::vector<iPoint> points = { iPoint(100, 100), iPoint(200, 300), iPoint(600, 200),
@@ -974,11 +975,11 @@ bool gfInitScene()
 	DrawOwnPoligon(points, RGBPIXEL(255, 0, 0));
 	iPoint p1 = iPoint(50, 100);
 	iPoint p2 = iPoint(600, 380);
-	
+
 	DrawLine(p1.x, p1.y, p2.x, p2.y, RGBPIXEL(0, 255, 0));
 	CuttingLineArbitraryPolygon(points, p1, p2, RGBPIXEL(0, 0, 255));
 	*/
-	
+
 	return true;
 }
 
@@ -987,15 +988,15 @@ bool gfInitScene()
 // Следует использовать для создания анимационных эффектов
 void gfDrawScene()
 {
-	 //3 лабораторная работа
-	// Очистка экрана
+	//3 лабораторная работа
+   // Очистка экрана
 	gfClearScreen(RGBPIXEL(255, 182, 0));
-	
+
 	static double angle = 0;
 	BuildParallelProjection(
 		0, // n
 		gfGetWindowWidth() / 4, gfGetWindowHeight() / 6, 0, // x0, y0, z0 
-		M_PI / 10, -M_PI / 8, M_PI / 2 , // angle_x, angle_y, angle_z
+		M_PI / 10, -M_PI / 8, M_PI / 2, // angle_x, angle_y, angle_z
 		{ 1, 0, 0 }, 0, // dir, angle
 		RGBPIXEL(45, 0, 247), // color
 		75, 100, 100, // width, height, depth
@@ -1005,7 +1006,7 @@ void gfDrawScene()
 	BuildPerspectiveProjection(
 		-200, // k
 		3 * gfGetWindowWidth() / 4, gfGetWindowHeight() / 6, 0, // x0, y0, z0 
-		M_PI / 10, -M_PI / 8, M_PI / 2 , // angle_x, angle_y, angle_z
+		M_PI / 10, -M_PI / 8, M_PI / 2, // angle_x, angle_y, angle_z
 		{ 1, 0, 0 }, 0, // dir, angle
 		RGBPIXEL(106, 0, 244), // color 
 		75, 100, 100, // width, height, depth
@@ -1022,7 +1023,7 @@ void gfDrawScene()
 	);
 	BuildPerspectiveProjection(
 		-200, // k
-		3 * gfGetWindowWidth() / 4, 3 *  gfGetWindowHeight() / 6, 0, // x0, y0, z0
+		3 * gfGetWindowWidth() / 4, 3 * gfGetWindowHeight() / 6, 0, // x0, y0, z0
 		M_PI / 10, -M_PI / 8, M_PI / 2, // angle_x, angle_y, angle_z
 		{ 1, 0, 0 }, 0, // dir, angle
 		RGBPIXEL(137, 0, 242), // color 
@@ -1040,7 +1041,7 @@ void gfDrawScene()
 	);
 	BuildPerspectiveProjection(
 		-200, // k
-		3 * gfGetWindowWidth() / 4, 5 *  gfGetWindowHeight() / 6, 0, // x0, y0, z0
+		3 * gfGetWindowWidth() / 4, 5 * gfGetWindowHeight() / 6, 0, // x0, y0, z0
 		M_PI / 10, -M_PI / 8, M_PI / 2, // angle_x, angle_y, angle_z
 		{ 0, 1, 0 }, angle, // dir, angle
 		RGBPIXEL(242, 0, 137), // color
@@ -1052,7 +1053,7 @@ void gfDrawScene()
 	{
 		angle -= 2 * M_PI;
 	}
-	
+
 }
 
 // Вызывается один раз перед выходом из приложения.
@@ -1063,32 +1064,32 @@ void gfCleanupScene()
 }
 
 // Вызывается когда пользователь нажимает левую кнопку мыши
-void gfOnLMouseClick( int x, int y )
+void gfOnLMouseClick(int x, int y)
 {
-    x; y;
-    gfDrawRectangle(x - 10, y - 10, x + 10, y + 10, RGBPIXEL::Green());
+	x; y;
+	gfDrawRectangle(x - 10, y - 10, x + 10, y + 10, RGBPIXEL::Green());
 }
 
 // Вызывается когда пользователь нажимает правую кнопку мыши
-void gfOnRMouseClick( int x, int y )
+void gfOnRMouseClick(int x, int y)
 {
-    x; y;
+	x; y;
 }
 
 // Вызывается когда пользователь нажимает клавишу на клавиатуре
-void gfOnKeyDown( UINT key )
+void gfOnKeyDown(UINT key)
 {
-    key;
+	key;
 
-    if( key == 'A' )
-        gfDisplayMessage( "'A' key has been pressed" );
+	if (key == 'A')
+		gfDisplayMessage("'A' key has been pressed");
 }
 
 // Вызывается когда пользователь отжимает клавишу на клавиатуре
-void gfOnKeyUp( UINT key )
+void gfOnKeyUp(UINT key)
 {
-    key;
+	key;
 
-    //if( key == 'B' )
-    //    gfDisplayMessage( "'B' key has been un-pressed" );
+	//if( key == 'B' )
+	//    gfDisplayMessage( "'B' key has been un-pressed" );
 }
